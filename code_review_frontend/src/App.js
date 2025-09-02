@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
-import Navbar from "./components/Navbar";
 import Landing from "./pages/Landing";
 import Dashboard from "./pages/Dashboard";
 import OAuthCallback from "./pages/OAuthCallback";
@@ -10,7 +9,7 @@ import { clearAuth, getAccessToken, setAccessToken } from "./services/storage";
 
 // PUBLIC_INTERFACE
 export default function App() {
-  /** App entry – wires routes, OAuth login, and layout */
+  /** App entry – wires routes, OAuth login, and layout (no navbar). */
   return (
     <BrowserRouter>
       <Main />
@@ -72,12 +71,9 @@ function Main() {
   }, [user, accessToken, loadingUser, signIn]);
 
   return (
-    <>
-      <Navbar onSignIn={signIn} onSignOut={signOut} user={user} />
-      <Routes>
-        <Route path="/" element={content} />
-        <Route path="/oauth/callback" element={<OAuthCallback onAuth={onAuth} />} />
-      </Routes>
-    </>
+    <Routes>
+      <Route path="/" element={content} />
+      <Route path="/oauth/callback" element={<OAuthCallback onAuth={onAuth} />} />
+    </Routes>
   );
 }
