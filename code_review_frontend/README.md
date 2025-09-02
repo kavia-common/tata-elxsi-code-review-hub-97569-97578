@@ -1,82 +1,61 @@
-# Lightweight React Template for KAVIA
+# Tata Elxsi Code Review Hub – React Frontend
 
-This project provides a minimal React template with a clean, modern UI and minimal dependencies.
+A modern, vibrant, light-themed React app featuring Tata Elxsi branding and GitHub OAuth sign-in. It displays user info, repositories, and a card-based code review dashboard.
 
 ## Features
 
-- **Lightweight**: No heavy UI frameworks - uses only vanilla CSS and React
-- **Modern UI**: Clean, responsive design with KAVIA brand styling
-- **Fast**: Minimal dependencies for quick loading times
-- **Simple**: Easy to understand and modify
+- Tata Elxsi color palette and corporate styling
+- Sign-in with GitHub (OAuth) using env-based config
+- Display authenticated GitHub user info and repositories
+- Card-based, responsive, light-themed layout
+- Environment-driven configuration (no hard-coded secrets)
 
-## Getting Started
+## Quickstart
 
-In the project directory, you can run:
+1) Install dependencies
+- npm install
 
-### `npm start`
+2) Configure environment
+- Copy .env.example to .env and fill in:
+  - REACT_APP_SITE_URL
+  - REACT_APP_GITHUB_CLIENT_ID
+  - REACT_APP_GITHUB_SCOPES (optional)
+  - REACT_APP_BACKEND_URL (optional, required for token exchange)
 
-Runs the app in development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+3) Run
+- npm start
+- Open http://localhost:3000
 
-### `npm test`
+## OAuth Flow
 
-Launches the test runner in interactive watch mode.
+- Clicking “Sign in with GitHub” redirects to GitHub’s OAuth consent, using:
+  - client_id: REACT_APP_GITHUB_CLIENT_ID
+  - redirect_uri: REACT_APP_SITE_URL/oauth/callback
+  - scope: REACT_APP_GITHUB_SCOPES
 
-### `npm run build`
+- The callback page (/oauth/callback) expects a backend at REACT_APP_BACKEND_URL to exchange the “code” for an access token at:
+  - GET {REACT_APP_BACKEND_URL}/oauth/github/callback?code=...
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- If the backend is not configured, the app demonstrates the flow but cannot retrieve a token.
 
-## Customization
+## Branding
 
-### Colors
+- Colors:
+  - Primary: #c5168c
+  - Secondary: #034ea1
+  - Accent: #c5168c
 
-The main brand colors are defined as CSS variables in `src/App.css`:
+- The layout uses soft elevation, rounded corners, and a sticky top navbar with Tata Elxsi gradient.
 
-```css
-:root {
-  --kavia-orange: #E87A41;
-  --kavia-dark: #1A1A1A;
-  --text-color: #ffffff;
-  --text-secondary: rgba(255, 255, 255, 0.7);
-  --border-color: rgba(255, 255, 255, 0.1);
-}
-```
+## Project Structure
 
-### Components
+- src/components: Navbar, Card, GitHubLoginButton
+- src/pages: Landing, Dashboard, OAuthCallback
+- src/services: api.js (OAuth helpers, GitHub API), storage.js (localStorage)
 
-This template uses pure HTML/CSS components instead of a UI framework. You can find component styles in `src/App.css`. 
+## Notes
 
-Common components include:
-- Buttons (`.btn`, `.btn-large`)
-- Container (`.container`)
-- Navigation (`.navbar`)
-- Typography (`.title`, `.subtitle`, `.description`)
+- Do not hard-code secrets in source code.
+- Always provide REACT_APP_* variables via .env.
+- For production deployments, configure REACT_APP_SITE_URL to match your domain.
 
-## Learn More
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
